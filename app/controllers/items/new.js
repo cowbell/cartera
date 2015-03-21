@@ -1,15 +1,16 @@
 import Ember from "ember";
 
 export default Ember.Controller.extend({
+    form: Ember.computed.alias("model.form"),
+
     actions: {
         saveItem: function () {
-            var item,
-                controller = this,
-                model = this.get("model");
+            var controller = this,
+                form = this.get("form");
 
-            item = this.store.createRecord("item", model);
-
-            item.save().then(function () {
+            form.validate().then(function () {
+                return controller.store.createRecord("item", form.toModel()).save();
+            }).then(function () {
                 controller.transitionToRoute("items");
             });
         }

@@ -3,11 +3,15 @@
 <table>
   <tr>
     <th>Name</th>
+    <th>Actions</th>
   </tr>
   {{#each item in controller}}
     <tr>
       <td>
         {{item.name}}
+      </td>
+      <td>
+        <button {{action "destroyItem" item}}>Remove</button>
       </td>
     </tr>
   {{/each}}

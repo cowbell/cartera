@@ -3,8 +3,11 @@
 <form {{action "saveItem" on="submit"}}>
   <div>
     <label>Name</label>
-    {{input valueBinding="model.name"}}
+    {{input valueBinding="form.name"}}
+    {{form.errors.name}}
   </div>
 
   <button>Save</button>
+  or
+  {{link-to "Cancel" "items.index"}}
 </form>
