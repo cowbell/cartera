@@ -1,11 +1,7 @@
-/*global Firebase*/
-
-import DS from "ember-data";
 import config from "../config/environment";
+import Firebase from "firebase";
+import FirebaseAdapter from "emberfire/adapters/firebase";
 
-var url = config.APP.FIREBASE_URL,
-    ref = new Firebase(url);
-
-export default DS.FirebaseAdapter.extend({
-    firebase: ref.child(ref.getAuth().uid)
+export default FirebaseAdapter.extend({
+    firebase: new Firebase(config.APP.FIREBASE_URL)
 });

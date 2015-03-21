@@ -1,0 +1,16 @@
+<h3>Items</h3>
+
+<table>
+  <tr>
+    <th>Name</th>
+  </tr>
+  {{#each item in controller}}
+    <tr>
+      <td>
+        {{item.name}}
+      </td>
+    </tr>
+  {{/each}}
+</table>
+
+{{link-to "New Item" "items.new"}}
