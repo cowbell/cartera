@@ -5,10 +5,13 @@ export default Ember.Object.extend(EmberValidations.Mixin, {
     validations: {
         name: {
             presence: true
+        },
+        date: {
+            presence: true
         }
     },
 
     toModel: function () {
-        return this.getProperties("name");
+        return this.getProperties("name", "date");
     }
 });

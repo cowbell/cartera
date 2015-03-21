@@ -1,20 +1,32 @@
-<h3>Items</h3>
+<div class="container">
+  <h3>
+    {{link-to "Items" "items.index"}}
+  </h3>
 
-<table>
-  <tr>
-    <th>Name</th>
-    <th>Actions</th>
-  </tr>
-  {{#each item in controller}}
-    <tr>
-      <td>
-        {{item.name}}
-      </td>
-      <td>
-        <button {{action "destroyItem" item}}>Remove</button>
-      </td>
-    </tr>
-  {{/each}}
-</table>
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Date</th>
+        <th class="text-right">Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      {{#each item in controller}}
+        <tr>
+          <td>
+            {{item.name}}
+          </td>
+          <td>
+            {{item.date}}
+          </td>
+          <td class="text-right">
+            <button {{action "destroyItem" item}} type="button" class="btn btn-link btn-xs">Remove</button>
+          </td>
+        </tr>
+      {{/each}}
+    </tbody>
+  </table>
 
-{{link-to "New Item" "items.new"}}
+  {{link-to "New Item" "items.new" class="btn btn-success"}}
+</div>

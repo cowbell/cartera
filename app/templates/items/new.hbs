@@ -1,13 +1,20 @@
-<h3>New Item</h3>
+<div class="container">
+  <h3>New Item</h3>
 
-<form {{action "saveItem" on="submit"}}>
-  <div>
-    <label>Name</label>
-    {{input valueBinding="form.name"}}
-    {{form.errors.name}}
-  </div>
+  <form {{action "saveItem" on="submit"}}>
+    <div {{bind-attr class=":form-group form.errors.name:has-error"}}>
+      <label class="control-label">Name</label>
+      {{input valueBinding="form.name" class="form-control"}}
+      <span class="help-block">{{form.errors.name}}</span>
+    </div>
 
-  <button>Save</button>
-  or
-  {{link-to "Cancel" "items.index"}}
-</form>
+    <div {{bind-attr class=":form-group form.errors.date:has-error"}}>
+      <label class="control-label">Date</label>
+      {{input valueBinding="form.date" class="form-control" type="date"}}
+      <span class="help-block">{{form.errors.date}}</span>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Save</button>
+    {{link-to "Cancel" "items.index" class="btn btn-link"}}
+  </form>
+</div>
