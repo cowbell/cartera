@@ -3,5 +3,5 @@ import Firebase from "firebase";
 import FirebaseAdapter from "emberfire/adapters/firebase";
 
 export default FirebaseAdapter.extend({
-    firebase: new Firebase(config.APP.FIREBASE_URL)
+    firebase: new Firebase(config.firebase)
 });

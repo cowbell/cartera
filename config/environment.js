@@ -4,20 +4,22 @@ module.exports = function (environment) {
     var ENV = {
         modulePrefix: "cartera",
         environment: environment,
-    contentSecurityPolicy: { 'connect-src': "'self' wss://*.firebaseio.com" },
-    firebase: 'https://YOUR-FIREBASE-NAME.firebaseio.com/',
+        contentSecurityPolicy: {
+            "connect-src": "'self' wss://*.firebaseio.com"
+        },
+        firebase: "https://cartera.firebaseio.com/",
         baseURL: "/",
         locationType: "auto",
+
+        APP: {
+
+        },
 
         EmberENV: {
             FEATURES: {
                 // Here you can enable experimental features on an ember canary build
                 // e.g. "with-controller": true
             }
-        },
-
-        APP: {
-            FIREBASE_URL: "https://cartera.firebaseio.com/"
         }
     };
 
