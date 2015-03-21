@@ -4,14 +4,30 @@ import EmberValidations from "ember-validations";
 export default Ember.Object.extend(EmberValidations.Mixin, {
     validations: {
         name: {
-            presence: true
+            presence: {
+                if: "isSubmitted"
+            }
         },
         date: {
-            presence: true
+            presence: {
+                if: "isSubmitted"
+            }
+        },
+        amount: {
+            presence: {
+                if: "isSubmitted"
+            }
+        },
+        price: {
+            presence: {
+                if: "isSubmitted"
+            }
         }
     },
 
+    isSubmitted: false,
+
     toModel: function () {
-        return this.getProperties("name", "date");
+        return this.getProperties("name", "date", "amount", "price");
     }
 });

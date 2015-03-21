@@ -14,6 +14,18 @@
       <span class="help-block">{{form.errors.date}}</span>
     </div>
 
+    <div {{bind-attr class=":form-group form.errors.amount:has-error"}}>
+      <label class="control-label">Amount</label>
+      {{input valueBinding="form.amount" class="form-control" type="number"}}
+      <span class="help-block">{{form.errors.amount}}</span>
+    </div>
+
+    <div {{bind-attr class=":form-group form.errors.price:has-error"}}>
+      <label class="control-label">Price</label>
+      {{input valueBinding="form.price" class="form-control" type="number"}}
+      <span class="help-block">{{form.errors.price}}</span>
+    </div>
+
     <button type="submit" class="btn btn-primary">Save</button>
     {{link-to "Cancel" "items.index" class="btn btn-link"}}
   </form>

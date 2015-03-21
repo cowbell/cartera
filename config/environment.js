@@ -5,7 +5,7 @@ module.exports = function (environment) {
         modulePrefix: "cartera",
         environment: environment,
         contentSecurityPolicy: {
-            "connect-src": "'self' wss://*.firebaseio.com"
+            "connect-src": "'self' wss://*.firebaseio.com https://query.yahooapis.com"
         },
         firebase: "https://cartera.firebaseio.com/",
         baseURL: "/",
