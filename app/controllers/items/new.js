@@ -1,14 +1,17 @@
 import Ember from "ember";
-// import ExchangeRate from "cartera/models/exchange_rate";
+import ExchangeRate from "cartera/models/exchange_rate";
 
 export default Ember.Controller.extend({
     form: Ember.computed.alias("model.form"),
 
-    // exchangeRate: (function () {
-    //     var date = this.get("form.date");
+    exchangeRate: (function () {
+        var date = this.get("form.date"),
+            name = this.get("form.name");
 
-    //     return ExchangeRate.find(date);
-    // }).property("form.name", "form.date"),
+        if (date && name) {
+            return ExchangeRate.find(date, name);
+        }
+    }).property("form.name", "form.date"),
 
     actions: {
         saveItem: function () {

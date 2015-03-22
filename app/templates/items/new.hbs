@@ -20,6 +20,8 @@
       <span class="help-block">{{form.errors.amount}}</span>
     </div>
 
+    {{exchangeRate.average}}
+
     <div {{bind-attr class=":form-group form.errors.price:has-error"}}>
       <label class="control-label">Price</label>
       {{input valueBinding="form.price" class="form-control" type="number"}}
