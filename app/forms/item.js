@@ -13,7 +13,7 @@ export default Ember.Object.extend(EmberValidations.Mixin, {
                 if: "isSubmitted"
             }
         },
-        amount: {
+        quantity: {
             presence: {
                 if: "isSubmitted"
             }
@@ -28,6 +28,6 @@ export default Ember.Object.extend(EmberValidations.Mixin, {
     isSubmitted: false,
 
     toModel: function () {
-        return this.getProperties("name", "date", "amount", "price");
+        return this.getProperties("name", "date", "quantity", "price");
     }
 });

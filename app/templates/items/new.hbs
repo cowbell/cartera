@@ -14,17 +14,15 @@
       <span class="help-block">{{form.errors.date}}</span>
     </div>
 
-    <div {{bind-attr class=":form-group form.errors.amount:has-error"}}>
-      <label class="control-label">Amount</label>
-      {{input valueBinding="form.amount" class="form-control" type="number"}}
-      <span class="help-block">{{form.errors.amount}}</span>
+    <div {{bind-attr class=":form-group form.errors.quantity:has-error"}}>
+      <label class="control-label">Quantity</label>
+      {{input valueBinding="form.quantity" class="form-control" type="number"}}
+      <span class="help-block">{{form.errors.quantity}}</span>
     </div>
-
-    {{exchangeRate.average}}
 
     <div {{bind-attr class=":form-group form.errors.price:has-error"}}>
       <label class="control-label">Price</label>
-      {{input valueBinding="form.price" class="form-control" type="number"}}
+      {{input valueBinding="form.price" class="form-control" type="number" step="any"}}
       <span class="help-block">{{form.errors.price}}</span>
     </div>
 
