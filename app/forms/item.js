@@ -3,7 +3,7 @@ import EmberValidations from "ember-validations";
 
 export default Ember.Object.extend(EmberValidations.Mixin, {
     validations: {
-        name: {
+        symbol: {
             presence: {
                 if: "isSubmitted"
             }
@@ -28,6 +28,6 @@ export default Ember.Object.extend(EmberValidations.Mixin, {
     isSubmitted: false,
 
     toModel: function () {
-        return this.getProperties("name", "date", "quantity", "price");
+        return this.getProperties("symbol", "date", "quantity", "price");
     }
 });

@@ -2,10 +2,10 @@
   <h3>New Item</h3>
 
   <form {{action "saveItem" on="submit"}}>
-    <div {{bind-attr class=":form-group form.errors.name:has-error"}}>
-      <label class="control-label">Name</label>
-      {{input valueBinding="form.name" class="form-control"}}
-      <span class="help-block">{{form.errors.name}}</span>
+    <div {{bind-attr class=":form-group form.errors.symbol:has-error"}}>
+      <label class="control-label">Symbol</label>
+      {{input valueBinding="form.symbol" class="form-control"}}
+      <span class="help-block">{{form.errors.symbol}}</span>
     </div>
 
     <div {{bind-attr class=":form-group form.errors.date:has-error"}}>
