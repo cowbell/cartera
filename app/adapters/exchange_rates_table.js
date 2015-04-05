@@ -2,24 +2,38 @@ import Ember from "ember";
 import ajax from "ic-ajax";
 
 export default Ember.Object.extend({
-    find: function(store, type, id) {
-        var q;
-
-        // q = `SELECT * FROM nbp.tables WHERE id IN (SELECT id FROM nbp.dir WHERE typ = 'A' AND data_publikacji <= '${id}' | SORT(field='data_publikacji') | TAIL(count=1))`;
-        q = `SELECT * FROM nbp.tables WHERE id IN (SELECT id FROM nbp.dir WHERE typ = 'A' AND data_publikacji = '${id}')`;
-
+    yql: function (query, variables) {
         return ajax({
             url: "https://query.yahooapis.com/v1/public/yql",
             cache: true,
-            data: {
+            data: Ember.merge({
                 format: "json",
-                q: q,
+                q: query,
                 env: "store://datatables.org/alltableswithkeys"
+            }, variables)
+        });
+    },
+
+    find: function (store, type, id) {
+        return this.yql("SELECT * FROM nbp.tables WHERE id IN (SELECT id FROM nbp.dir WHERE typ = @type AND data_publikacji = @date)", {
+            date: id.substr(0, 10),
+            type: id.substr(11)
+        }).then(function (response) {
+            if (response.query.results) {
+                return response.query.results;
+            } else {
+                return Ember.RSVP.reject();
             }
         });
     },
 
     findQuery: function (store, type, query) {
-
+        return this.yql(`SELECT * FROM nbp.tables WHERE id IN (SELECT id FROM nbp.dir WHERE ${query})`).then(function (response) {
+            if (response.query.results) {
+                return response.query.results;
+            } else {
+                return [];
+            }
+        });
     }
 });

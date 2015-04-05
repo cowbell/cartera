@@ -7,24 +7,22 @@ export default DS.RESTSerializer.extend(DS.EmbeddedRecordsMixin, {
     },
 
     normalizePayload: function (payload) {
-        var results, exchangeRatesTables;
-
-        results = Ember.makeArray(payload.query.results && payload.query.results.tabela_kursow);
-
-        exchangeRatesTables = results.map(function (result) {
+        var exchangeRatesTables = Ember.makeArray(payload.tabela_kursow).map(function (result) {
             return {
-                id: result.data_publikacji,
+                id: `${result.data_publikacji}-${result.typ}`,
                 uid: result.uid,
                 type: result.typ,
                 number: result.numer_tabeli,
                 date: result.data_publikacji,
                 exchangeRates: result.pozycja.map(function (pozycja) {
                     return {
-                        id: `${result.data_publikacji}-${pozycja.kod_waluty}`,
-                        symbol: pozycja.kod_waluty,
+                        id: `${result.data_publikacji}-${result.typ}-${pozycja.kod_waluty || pozycja.symbol_waluty}`,
+                        symbol: pozycja.kod_waluty || pozycja.symbol_waluty,
                         divisor: parseInt(pozycja.przelicznik, 10),
                         name: pozycja.nazwa_waluty,
-                        average: parseFloat(pozycja.kurs_sredni.replace(",", "."))
+                        sell: parseFloat(String(pozycja.kurs_sprzedazy).replace(",", ".")),
+                        buy: parseFloat(String(pozycja.kurs_kupna).replace(",", ".")),
+                        average: parseFloat(String(pozycja.kurs_sredni).replace(",", "."))
                     };
                 })
             };
