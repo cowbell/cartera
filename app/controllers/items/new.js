@@ -1,8 +1,6 @@
 import Ember from "ember";
 
 export default Ember.Controller.extend({
-    form: Ember.computed.alias("model.form"),
-
     actions: {
         saveItem: function () {
             var controller = this,
