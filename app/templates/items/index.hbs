@@ -18,10 +18,10 @@
       </tr>
     </thead>
     <tbody>
-      {{#each item in controller itemController="item"}}
-        <tr>
+      {{#each item in controller}}
+        <tr {{bind-attr class="item.isLoss:text-danger item.isGain:text-success"}}>
           <td>
-            {{item.symbol}}
+            <abbr {{bind-attr title="item.name"}}>{{item.symbol}}</abbr>
           </td>
           <td class="text-center">
             {{item.date}}
@@ -50,7 +50,24 @@
         </tr>
       {{/each}}
     </tbody>
+    <tfoot>
+      <tr>
+        <th></th>
+        <th></th>
+        <th></th>
+        <th></th>
+        <th></th>
+        <th></th>
+        <th class="text-right">
+          {{currentValue}}
+        </th>
+        <th class="text-right">
+          {{gain}}
+        </th>
+        <th class="text-right">
+          {{link-to "Add" "items.new" class="btn btn-link btn-xs"}}
+        </th>
+      </tr>
+    </tfoot>
   </table>
-
-  {{link-to "New Item" "items.new" class="btn btn-primary"}}
 </div>

@@ -13,14 +13,13 @@ export default Ember.Controller.extend({
         return Math.round(price * quantity);
     }).property("model.price", "model.quantity"),
 
-    currentPrice: (function () {
-        var exchangeRate,
-            symbol = this.get("symbol");
-
-        exchangeRate = this.get("parentController.exchangeRatesTable.exchangeRates").findBy("symbol", symbol);
-
-        return exchangeRate && exchangeRate.get("average");
+    exchangeRate: (function () {
+        return this.get("parentController.exchangeRatesTable.exchangeRates").findBy("symbol", this.get("symbol"));
     }).property("parentController.exchangeRatesTable.@each", "symbol"),
+
+    name: Ember.computed.alias("exchangeRate.name"),
+
+    currentPrice: Ember.computed.alias("exchangeRate.average"),
 
     currentValue: (function () {
         var currentPrice = this.get("currentPrice"),
@@ -31,5 +30,13 @@ export default Ember.Controller.extend({
 
     gain: (function () {
         return this.get("currentValue") - this.get("value");
-    }).property("value", "currentValue")
+    }).property("value", "currentValue"),
+
+    isGain: (function () {
+        return this.get("gain") > 0;
+    }).property("gain"),
+
+    isLoss: (function () {
+        return this.get("gain") < 0;
+    }).property("gain")
 });
