@@ -6,10 +6,7 @@ export default Ember.Object.extend({
         return ajax({
             url: "https://query.yahooapis.com/v1/public/yql",
             cache: true,
-            data: Ember.merge({
-                format: "json",
-                env: "store://datatables.org/alltableswithkeys"
-            }, query)
+            data: Ember.merge({ format: "json", env: "store://datatables.org/alltableswithkeys" }, query)
         });
     },
 

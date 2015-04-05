@@ -9,7 +9,7 @@ export default Ember.Route.extend({
 
         return Ember.RSVP.hash({
             model: this.store.find("item"),
-            exchangeRatesTable: this.store.find("exchangeRatesTable", { q, today })
+            exchangeRatesTables: this.store.find("exchangeRatesTable", { q, today })
         });
     },
 
