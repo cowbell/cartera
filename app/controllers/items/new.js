@@ -8,6 +8,8 @@ export default Ember.Controller.extend({
 
         if (boughtOn) {
             return this.store.find("exchangeRatesTable", { mostRecentOn: boughtOn });
+        } else {
+            return undefined;
         }
     }).property("form.boughtOn"),
 
@@ -19,6 +21,8 @@ export default Ember.Controller.extend({
 
         if (symbol && exchangeRates) {
             return exchangeRates.findBy("symbol", symbol);
+        } else {
+            return undefined;
         }
     }).property("exchangeRates", "form.symbol"),
 
