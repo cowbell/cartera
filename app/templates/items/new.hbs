@@ -20,23 +20,34 @@
       <span class="help-block">{{form.errors.boughtOn}}</span>
     </div>
 
-    <div {{bind-attr class=":form-group form.errors.boughtPrice:has-error"}}>
-      <label class="control-label">Bought Price</label>
-      {{input value=form.boughtPrice class="form-control" type="number" step="any"}}
-      <span class="help-block">{{form.errors.boughtPrice}}</span>
+    <div class="form-group">
+      <div class="checkbox">
+        <label>
+          {{input type="checkbox" checked=isFetching}}
+          Fetch Price
+        </label>
+      </div>
     </div>
 
-    <div {{bind-attr class=":form-group form.errors.soldOn:has-error"}}>
-      <label class="control-label">Sold On</label>
-      {{input value=form.soldOn class="form-control" type="date"}}
-      <span class="help-block">{{form.errors.soldOn}}</span>
-    </div>
+    {{#if isFetching}}
+      <div {{bind-attr class=":form-group form.errors.boughtPrice:has-error"}}>
+        <label class="control-label">Bought Price</label>
+        <p class="form-control-static form-control" readonly>
+          {{#if exchangeRatesTables.isPending}}
+            Fetching…
+          {{/if}}
+          {{exchangeRate.average}}
+        </p>
+      </div>
+    {{/if}}
 
-    <div {{bind-attr class=":form-group form.errors.soldPrice:has-error"}}>
-      <label class="control-label">Sold Price</label>
-      {{input value=form.soldPrice class="form-control" type="number" step="any"}}
-      <span class="help-block">{{form.errors.soldPrice}}</span>
-    </div>
+    {{#unless isFetching}}
+      <div {{bind-attr class=":form-group form.errors.boughtPrice:has-error"}}>
+        <label class="control-label">Bought Price</label>
+        {{input value=form.boughtPrice class="form-control" type="number" step="any"}}
+        <span class="help-block">{{form.errors.boughtPrice}}</span>
+      </div>
+    {{/unless}}
 
     <button type="submit" class="btn btn-primary">Save</button>
     {{link-to "Cancel" "items.index" class="btn btn-link"}}

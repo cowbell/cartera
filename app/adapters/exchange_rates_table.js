@@ -25,6 +25,10 @@ export default Ember.Object.extend({
     },
 
     findQuery: function (store, type, query) {
+        if (query.mostRecentOn) {
+            query.q = "typ = 'A' AND data_publikacji <= @mostRecentOn | SORT(field='data_publikacji') | TAIL(count=1)";
+        }
+
         return this.yql(Ember.merge(query, {
             q: `SELECT * FROM nbp.tables WHERE id IN (SELECT id FROM nbp.dir WHERE ${query.q})`
         })).then(function (response) {

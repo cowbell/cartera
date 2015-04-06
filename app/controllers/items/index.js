@@ -4,7 +4,7 @@ export default Ember.ArrayController.extend({
     needs: ["asset"],
     itemController: "asset",
 
-    sortProperties: ["date"],
+    sortProperties: ["boughtOn"],
     sortAscending: true,
     exchangeRatesTable: Ember.computed.alias("exchangeRatesTables.firstObject"),
     soldValues: Ember.computed.mapBy("", "soldValue"),
