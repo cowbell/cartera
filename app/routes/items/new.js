@@ -1,10 +1,10 @@
 import Ember from "ember";
-import ItemForm from "cartera/forms/item";
+import AssetForm from "cartera/forms/asset";
 
 export default Ember.Route.extend({
     model: function () {
         return Ember.RSVP.hash({
-            form: ItemForm.create({
+            form: AssetForm.create({
                 container: this.get("container")
             })
         });

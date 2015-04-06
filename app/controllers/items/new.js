@@ -2,7 +2,7 @@ import Ember from "ember";
 
 export default Ember.Controller.extend({
     actions: {
-        saveItem: function () {
+        saveAsset: function () {
             var controller = this,
                 form = this.get("form");
 
@@ -10,7 +10,7 @@ export default Ember.Controller.extend({
 
             form.validate()
                 .then(function () {
-                    return controller.store.createRecord("item", form.toModel()).save();
+                    return controller.store.createRecord("asset", form.toModel()).save();
                 }).then(function () {
                     controller.transitionToRoute("items");
                 });

@@ -1,51 +1,51 @@
 <div class="container">
   <h3>
-    {{link-to "Items" "items.index"}}
+    {{link-to "Assets" "items.index"}}
   </h3>
 
   <table class="table table-striped">
     <thead>
       <tr>
         <th>Symbol</th>
-        <th class="text-center">Date</th>
         <th class="text-right">Quantity</th>
-        <th class="text-right">Price</th>
-        <th class="text-right">Value</th>
-        <th class="text-right">Current Price</th>
-        <th class="text-right">Current Value</th>
-        <th class="text-right">Gain / Loss</th>
+        <th class="text-center">Bought On</th>
+        <th class="text-right">Bought Price</th>
+        <th class="text-right">Bought Value</th>
+        <th class="text-right">Sold Price</th>
+        <th class="text-right">Sold Value</th>
+        <th class="text-right">Profit / Loss</th>
         <th class="text-right">Actions</th>
       </tr>
     </thead>
     <tbody>
-      {{#each item in controller}}
-        <tr {{bind-attr class="item.isLoss:text-danger item.isGain:text-success"}}>
+      {{#each asset in controller}}
+        <tr {{bind-attr class="asset.isLoss:text-danger asset.isProfit:text-success"}}>
           <td>
-            <abbr {{bind-attr title="item.name"}}>{{item.symbol}}</abbr>
+            <abbr {{bind-attr title="asset.name"}}>{{asset.symbol}}</abbr>
+          </td>
+          <td class="text-right">
+            {{asset.quantity}}
           </td>
           <td class="text-center">
-            {{item.date}}
+            {{asset.boughtOn}}
           </td>
           <td class="text-right">
-            {{item.quantity}}
+            {{asset.boughtPrice}}
           </td>
           <td class="text-right">
-            {{item.price}}
+            {{asset.boughtValue}}
           </td>
           <td class="text-right">
-            {{item.value}}
+            {{asset.soldPrice}}
           </td>
           <td class="text-right">
-            {{item.currentPrice}}
+            {{asset.soldValue}}
           </td>
           <td class="text-right">
-            {{item.currentValue}}
+            {{asset.profit}}
           </td>
           <td class="text-right">
-            {{item.gain}}
-          </td>
-          <td class="text-right">
-            <button {{action "destroyItem" item}} type="button" class="btn btn-link btn-xs">Remove</button>
+            <button {{action "destroyAsset" asset}} type="button" class="btn btn-link btn-xs">Remove</button>
           </td>
         </tr>
       {{/each}}
@@ -59,10 +59,10 @@
         <th></th>
         <th></th>
         <th class="text-right">
-          {{currentValue}}
+          {{soldValue}}
         </th>
         <th class="text-right">
-          {{gain}}
+          {{profit}}
         </th>
         <th class="text-right">
           {{link-to "Add" "items.new" class="btn btn-link btn-xs"}}

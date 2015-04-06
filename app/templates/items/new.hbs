@@ -1,29 +1,41 @@
 <div class="container">
-  <h3>New Item</h3>
+  <h3>New Asset</h3>
 
-  <form {{action "saveItem" on="submit"}}>
+  <form {{action "saveAsset" on="submit"}}>
     <div {{bind-attr class=":form-group form.errors.symbol:has-error"}}>
       <label class="control-label">Symbol</label>
-      {{input valueBinding="form.symbol" class="form-control"}}
+      {{input value=form.symbol class="form-control"}}
       <span class="help-block">{{form.errors.symbol}}</span>
-    </div>
-
-    <div {{bind-attr class=":form-group form.errors.date:has-error"}}>
-      <label class="control-label">Date</label>
-      {{input valueBinding="form.date" class="form-control" type="date"}}
-      <span class="help-block">{{form.errors.date}}</span>
     </div>
 
     <div {{bind-attr class=":form-group form.errors.quantity:has-error"}}>
       <label class="control-label">Quantity</label>
-      {{input valueBinding="form.quantity" class="form-control" type="number"}}
+      {{input value=form.quantity class="form-control" type="number"}}
       <span class="help-block">{{form.errors.quantity}}</span>
     </div>
 
-    <div {{bind-attr class=":form-group form.errors.price:has-error"}}>
-      <label class="control-label">Price</label>
-      {{input valueBinding="form.price" class="form-control" type="number" step="any"}}
-      <span class="help-block">{{form.errors.price}}</span>
+    <div {{bind-attr class=":form-group form.errors.boughtOn:has-error"}}>
+      <label class="control-label">Bought On</label>
+      {{input value=form.boughtOn class="form-control" type="date"}}
+      <span class="help-block">{{form.errors.boughtOn}}</span>
+    </div>
+
+    <div {{bind-attr class=":form-group form.errors.boughtPrice:has-error"}}>
+      <label class="control-label">Bought Price</label>
+      {{input value=form.boughtPrice class="form-control" type="number" step="any"}}
+      <span class="help-block">{{form.errors.boughtPrice}}</span>
+    </div>
+
+    <div {{bind-attr class=":form-group form.errors.soldOn:has-error"}}>
+      <label class="control-label">Sold On</label>
+      {{input value=form.soldOn class="form-control" type="date"}}
+      <span class="help-block">{{form.errors.soldOn}}</span>
+    </div>
+
+    <div {{bind-attr class=":form-group form.errors.soldPrice:has-error"}}>
+      <label class="control-label">Sold Price</label>
+      {{input value=form.soldPrice class="form-control" type="number" step="any"}}
+      <span class="help-block">{{form.errors.soldPrice}}</span>
     </div>
 
     <button type="submit" class="btn btn-primary">Save</button>
