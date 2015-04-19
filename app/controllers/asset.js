@@ -17,8 +17,6 @@ export default Ember.Controller.extend({
         return this.get("parentController.exchangeRatesTable.exchangeRates").findBy("symbol", this.get("model.symbol"));
     }).property("parentController.exchangeRatesTable.@each", "model.symbol"),
 
-    name: Ember.computed.alias("exchangeRate.name"),
-
     soldPrice: Ember.computed.alias("exchangeRate.average"),
 
     soldValue: (function () {

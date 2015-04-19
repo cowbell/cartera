@@ -1,38 +1,29 @@
 import Ember from "ember";
 
 export default Ember.Controller.extend({
-    isFetching: true,
-
-    exchangeRatesTables: (function () {
-        var boughtOn = this.get("form.boughtOn");
-
-        if (boughtOn) {
-            return this.store.find("exchangeRatesTable", { mostRecentOn: boughtOn });
-        } else {
-            return undefined;
-        }
-    }).property("form.boughtOn"),
-
     exchangeRates: Ember.computed.alias("exchangeRatesTables.firstObject.exchangeRates"),
 
-    exchangeRate: (function () {
-        var symbol = this.get("form.symbol"),
+    exchangeRatesDidChange: (function () {
+        var exchangeRate,
+            symbol = this.get("form.symbol"),
             exchangeRates = this.get("exchangeRates");
 
         if (symbol && exchangeRates) {
-            return exchangeRates.findBy("symbol", symbol);
-        } else {
-            return undefined;
-        }
-    }).property("exchangeRates", "form.symbol"),
+            exchangeRate = exchangeRates.findBy("symbol", symbol);
 
-    exchangeRateDidChange: (function () {
-        if (this.get("isFetching")) {
-            this.set("form.boughtPrice", this.get("exchangeRate.average"));
+            this.set("form.boughtPrice", exchangeRate.get("average"));
         }
-    }).observes("exchangeRate.average", "isFetching"),
+    }).observes("exchangeRates", "form.symbol"),
 
     actions: {
+        fetch: function () {
+            var boughtOn = this.get("form.boughtOn");
+
+            if (boughtOn) {
+                this.set("exchangeRatesTables", this.store.find("exchangeRatesTable", { mostRecentOn: boughtOn }));
+            }
+        },
+
         saveAsset: function () {
             var controller = this,
                 form = this.get("form");

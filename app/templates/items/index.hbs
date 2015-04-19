@@ -21,7 +21,7 @@
       {{#each asset in controller}}
         <tr {{bind-attr class="asset.isLoss:text-danger asset.isProfit:text-success"}}>
           <td>
-            <abbr {{bind-attr title="asset.name"}}>{{asset.symbol}}</abbr>
+            {{asset.symbol}}
           </td>
           <td class="text-right">
             {{asset.quantity}}
