@@ -16,7 +16,7 @@
         <key id="date" type="xs:string" paramType="variable" required="true" />
       </inputs>
       <execute><![CDATA[
-        var actualDate, trs, tr, i, page, url,
+        var actualDate, trs, tr, i, page, url, symbol, price,
             rates = [];
 
         url = request.url.replace("@date", date.replace(/[^0-9]/g, ""));
@@ -42,10 +42,13 @@
         for (i in trs) {
             tr = trs[i];
 
+            symbol = trim(tr.td[2]);
+
             rates.push({
+                id: actualDate + "-" + symbol,
                 date: actualDate,
                 divisor: parseNumber(tr.td[1]),
-                code: trim(tr.td[2]),
+                symbol: symbol,
                 buy: parseNumber(tr.td[3]),
                 sell: parseNumber(tr.td[5])
             });

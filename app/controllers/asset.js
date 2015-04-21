@@ -13,11 +13,11 @@ export default Ember.Controller.extend({
         return Math.round(boughtPrice * quantity);
     }).property("model.boughtPrice", "model.quantity"),
 
-    exchangeRate: (function () {
-        return this.get("parentController.exchangeRatesTable.exchangeRates").findBy("symbol", this.get("model.symbol"));
-    }).property("parentController.exchangeRatesTable.@each", "model.symbol"),
+    rate: (function () {
+        return this.get("parentController.rates").findBy("symbol", this.get("model.symbol"));
+    }).property("parentController.rates.@each", "model.symbol"),
 
-    soldPrice: Ember.computed.alias("exchangeRate.average"),
+    soldPrice: Ember.computed.alias("rate.price"),
 
     soldValue: (function () {
         var soldPrice = this.get("soldPrice"),

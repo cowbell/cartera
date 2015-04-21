@@ -4,7 +4,10 @@ export default Ember.Route.extend({
     model: function () {
         return Ember.RSVP.hash({
             model: this.store.find("asset"),
-            exchangeRatesTables: this.store.find("exchangeRatesTable", { mostRecentOn: new Date().toISOString().substr(0, 10) })
+            rates: this.store.find("rate", {
+                q: "SELECT * FROM money.nbp_rates WHERE date = @today",
+                today: new Date().toISOString().substr(0, 10)
+            })
         });
     },
 

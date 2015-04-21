@@ -16,7 +16,7 @@
         <key id="date" type="xs:string" paramType="variable" required="true" />
       </inputs>
       <execute><![CDATA[
-        var actualDate, trs, tr, i, page, url,
+        var actualDate, trs, tr, i, page, url, name, ticker, symbol,
             quotes = [];
 
         url = request.url.replace("@date", date.replace(/[^0-9]/g, ""));
@@ -42,10 +42,16 @@
         for (i in trs) {
             tr = trs[i];
 
+            name = trim(String(tr.td[0].a) || String(tr.td[0]));
+            ticker = trim(tr.td[1]);
+            symbol = ticker || name;
+
             quotes.push({
+                id: actualDate + "-" + symbol,
                 date: actualDate,
-                name: trim(String(tr.td[0].a) || String(tr.td[0])),
-                ticker: trim(tr.td[1]),
+                name: name,
+                ticker: ticker,
+                symbol: symbol,
                 price: parseNumber(tr.td[5])
             });
         }

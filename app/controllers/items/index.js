@@ -6,7 +6,6 @@ export default Ember.ArrayController.extend({
 
     sortProperties: ["boughtOn"],
     sortAscending: true,
-    exchangeRatesTable: Ember.computed.alias("exchangeRatesTables.firstObject"),
     soldValues: Ember.computed.mapBy("", "soldValue"),
     soldValue: Ember.computed.sum("soldValues"),
     profits: Ember.computed.mapBy("", "profit"),
