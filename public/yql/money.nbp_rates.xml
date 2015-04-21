@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<table xmlns="http://query.yahooapis.com/v1/schema/table.xsd">
+  <meta>
+    <author>Kuba Kuzma</author>
+    <sampleQuery>SELECT * FROM money.nbp_rates WHERE date = "2015-04-17";</sampleQuery>
+    <description>Returns NBP exchange rates.</description>
+    <documentationURL></documentationURL>
+  </meta>
+  <bindings>
+    <select itemPath="result.rates" produces="JSON">
+      <urls>
+        <url>http://www.money.pl/pieniadze/nbparch/kupnosprzedaz/archiwum,@date.html</url>
+      </urls>
+      <inputs>
+        <key id="date" type="xs:string" paramType="variable" required="true" />
+      </inputs>
+      <execute><![CDATA[
+        var actualDate, trs, tr, i, page, url,
+            rates = [];
+
+        url = request.url.replace("@date", date.replace(/[^0-9]/g, ""));
+        page = y.query("SELECT * FROM html WHERE url=@url", { url: url }).results;
+
+        function trim(string) {
+            return String(string).replace(/^\s+|\s+$/gm,"");
+        }
+
+        function parseNumber(string) {
+            return String(string).replace(/[^0-9,-]/g, "").replace(",", ".");
+        }
+
+        function parseDate(string) {
+            var matches = String(string).match(/\d{4}-\d{2}-\d{2}/);
+
+            return matches && matches[0];
+        }
+
+        actualDate = parseDate(y.xpath(page, "//div[contains(text(), 'C/NBP/')]"));
+        trs = y.xpath(page, "//table[contains(@class, 'tabela big')]/tbody/tr");
+
+        for (i in trs) {
+            tr = trs[i];
+
+            rates.push({
+                date: actualDate,
+                divisor: parseNumber(tr.td[1]),
+                code: trim(tr.td[2]),
+                buy: parseNumber(tr.td[3]),
+                sell: parseNumber(tr.td[5])
+            });
+        }
+
+        response.object = { rates: rates };
+      ]]></execute>
+    </select>
+  </bindings>
+</table>

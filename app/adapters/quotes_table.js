@@ -10,24 +10,42 @@ export default Ember.Object.extend({
         });
     },
 
-    find: function (store, _, id) {
-        var date = id.substr(0, 10),
-            type = id.substr(11);
-
+    find: function (store, type, id) {
         return this.yql({
-            q: "USE 'store://voBhSCQtIC1LHtT40bie07' as gpw.quotes; SELECT * FROM gpw.quotes WHERE type = @type AND date = @date",
-            date: date,
-            type: type
+            q: `USE 'store://voBhSCQtIC1LHtT40bie07' AS gpw.quotes;
+                SELECT * FROM gpw.quotes WHERE type IN ('10', '13', '241') AND date = @date`,
+            date: id
         }).then(function (response) {
             if (response.query.results) {
                 return {
                     id: id,
-                    date: date,
-                    type: type,
+                    date: id,
                     quotes: response.query.results.quotes
                 };
             } else {
                 return Ember.RSVP.reject();
+            }
+        });
+    },
+
+    findQuery: function (store, type, query) {
+        if (query.mostRecentOn) {
+            query.q = "date <= @mostRecentOn | SORT(field='date') | TAIL(count=1)";
+        }
+
+        return this.yql(Ember.merge(query, {
+            q: `USE "store://CdHaTWxWSo2a8r7CqMbdGR" AS gpw.dir;
+                USE 'store://voBhSCQtIC1LHtT40bie07' AS gpw.quotes;
+                SELECT * FROM gpw.quotes WHERE type IN ('10', '13', '241') AND date IN (SELECT date FROM gpw.dir WHERE ${query.q})`
+        })).then(function (response) {
+            if (response.query.results) {
+                return {
+                    id: response.query.results.quotes[0].date,
+                    date: response.query.results.quotes[0].date,
+                    quotes: response.query.results.quotes
+                };
+            } else {
+                return [];
             }
         });
     }

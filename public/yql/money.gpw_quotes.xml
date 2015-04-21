@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<table xmlns="http://query.yahooapis.com/v1/schema/table.xsd">
+  <meta>
+    <author>Kuba Kuzma</author>
+    <sampleQuery>SELECT * FROM money.gpw_quotes WHERE date = "2015-04-17";</sampleQuery>
+    <description>Returns GPW quotes.</description>
+    <documentationURL></documentationURL>
+  </meta>
+  <bindings>
+    <select itemPath="result.quotes" produces="JSON">
+      <urls>
+        <url>http://www.money.pl/gielda/archiwum/latami/kursy,akcji,notowania,GPW,@date,ciagle,akcje.html</url>
+      </urls>
+      <inputs>
+        <key id="date" type="xs:string" paramType="variable" required="true" />
+      </inputs>
+      <execute><![CDATA[
+        var actualDate, trs, tr, i, page, url,
+            quotes = [];
+
+        url = request.url.replace("@date", date.replace(/[^0-9]/g, ""));
+        page = y.query("SELECT * FROM html WHERE url=@url", { url: url }).results;
+
+        function trim(string) {
+            return String(string).replace(/^\s+|\s+$/gm,"");
+        }
+
+        function parseNumber(string) {
+            return String(string).replace(/[^0-9,-]/g, "").replace(",", ".");
+        }
+
+        function parseDate(string) {
+            var matches = String(string).match(/\d{4}-\d{2}-\d{2}/);
+
+            return matches && matches[0];
+        }
+
+        actualDate = parseDate(y.xpath(page, "//table[@class='notowania_box']//span[@class='bld']"));
+        trs = y.xpath(page, "//table[contains(@class, 'tabela big')]/tbody/tr");
+
+        for (i in trs) {
+            tr = trs[i];
+
+            quotes.push({
+                date: actualDate,
+                name: trim(String(tr.td[0].a) || String(tr.td[0])),
+                ticker: trim(tr.td[1]),
+                price: parseNumber(tr.td[5])
+            });
+        }
+
+        response.object = { quotes: quotes };
+      ]]></execute>
+    </select>
+  </bindings>
+</table>
