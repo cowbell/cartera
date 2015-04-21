@@ -1,26 +1,29 @@
 import Ember from "ember";
 
 export default Ember.Controller.extend({
-    exchangeRates: Ember.computed.alias("exchangeRatesTables.firstObject.exchangeRates"),
-
-    exchangeRatesDidChange: (function () {
-        var exchangeRate,
+    ratesDidChange: (function () {
+        var rate,
             symbol = this.get("form.symbol"),
-            exchangeRates = this.get("exchangeRates");
+            rates = this.get("rates.content");
 
-        if (symbol && exchangeRates) {
-            exchangeRate = exchangeRates.findBy("symbol", symbol);
+        if (symbol && rates) {
+            rate = rates.findBy("symbol", symbol);
 
-            this.set("form.boughtPrice", exchangeRate.get("average"));
+            if (rate) {
+                this.set("form.boughtPrice", rate.get("price"));
+            }
         }
-    }).observes("exchangeRates", "form.symbol"),
+    }).observes("rates.content", "form.symbol"),
 
     actions: {
         fetch: function () {
             var boughtOn = this.get("form.boughtOn");
 
             if (boughtOn) {
-                this.set("exchangeRatesTables", this.store.find("exchangeRatesTable", { mostRecentOn: boughtOn }));
+                this.set("rates", this.store.find("rate", {
+                    q: "SELECT * FROM money.nbp_rates WHERE date = @date",
+                    date: boughtOn
+                }));
             }
         },
 

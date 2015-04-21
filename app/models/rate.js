@@ -7,6 +7,6 @@ export default DS.Model.extend({
     buy: DS.attr("number"),
     sell: DS.attr("number"),
     price: (function () {
-        return (this.get("buy") + this.get("sell")) / 2;
+        return parseFloat(((this.get("buy") + this.get("sell")) / 2).toFixed(4));
     }).property("buy", "sell")
 });

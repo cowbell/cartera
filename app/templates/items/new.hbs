@@ -21,9 +21,9 @@
     </div>
 
     <div class="form-group">
-      <button type="button" {{action "fetch"}} {{bind-attr disabled=exchangeRatesTables.isPending}} class="btn btn-default">
-       {{#if exchangeRatesTables.isPending}}Fetching…{{/if}}
-       {{#unless exchangeRatesTables.isPending}}Fetch{{/unless}}
+      <button type="button" {{action "fetch"}} {{bind-attr disabled=rates.isPending}} class="btn btn-default">
+       {{#if rates.isPending}}Fetching…{{/if}}
+       {{#unless rates.isPending}}Fetch{{/unless}}
       </button>
     </div>
 
