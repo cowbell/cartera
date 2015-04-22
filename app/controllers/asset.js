@@ -13,11 +13,11 @@ export default Ember.Controller.extend({
         return Math.round(boughtPrice * quantity);
     }).property("model.boughtPrice", "model.quantity"),
 
-    rate: (function () {
-        return this.get("parentController.rates").findBy("symbol", this.get("model.symbol"));
-    }).property("parentController.rates.@each", "model.symbol"),
+    assetType: (function () {
+        return this.get("parentController.assetTypes").findBy("symbol", this.get("model.symbol"));
+    }).property("parentController.assetTypes.@each", "model.symbol"),
 
-    soldPrice: Ember.computed.alias("rate.price"),
+    soldPrice: Ember.computed.alias("assetType.price"),
 
     soldValue: (function () {
         var soldPrice = this.get("soldPrice"),

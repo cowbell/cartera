@@ -4,7 +4,13 @@
   <form {{action "saveAsset" on="submit"}}>
     <div {{bind-attr class=":form-group form.errors.symbol:has-error"}}>
       <label class="control-label">Symbol</label>
-      {{input value=form.symbol class="form-control"}}
+      {{view "list-field" value=form.symbol class="form-control" list="asset-types"}}
+
+      <datalist id="asset-types">
+        {{#each assetType in assetTypes}}
+          <option {{bind-attr value=assetType.symbol}}></option>
+        {{/each}}
+      </datalist>
       <span class="help-block">{{form.errors.symbol}}</span>
     </div>
 
@@ -20,16 +26,18 @@
       <span class="help-block">{{form.errors.boughtOn}}</span>
     </div>
 
-    <div class="form-group">
-      <button type="button" {{action "fetch"}} {{bind-attr disabled=rates.isPending}} class="btn btn-default">
-       {{#if rates.isPending}}Fetching…{{/if}}
-       {{#unless rates.isPending}}Fetch{{/unless}}
-      </button>
-    </div>
-
     <div {{bind-attr class=":form-group form.errors.boughtPrice:has-error"}}>
       <label class="control-label">Bought Price</label>
-      {{input value=form.boughtPrice class="form-control" type="number" step="any"}}
+      <div class="input-group">
+        <span class="input-group-addon">PLN</span>
+        {{input value=form.boughtPrice class="form-control" type="number" step="any" disabled=assetTypes.isPending}}
+        <span class="input-group-btn">
+          <button type="button" {{action "fetch"}} {{bind-attr disabled=assetTypes.isPending}} class="btn btn-default">
+           {{#if assetTypes.isPending}}Fetching…{{/if}}
+           {{#unless assetTypes.isPending}}Fetch{{/unless}}
+          </button>
+        </span>
+      </div>
       <span class="help-block">{{form.errors.boughtPrice}}</span>
     </div>
 

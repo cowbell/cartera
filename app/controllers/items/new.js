@@ -1,29 +1,26 @@
 import Ember from "ember";
 
 export default Ember.Controller.extend({
-    ratesDidChange: (function () {
-        var rate,
+    assetTypesDidChange: (function () {
+        var assetType,
             symbol = this.get("form.symbol"),
-            rates = this.get("rates.content");
+            assetTypes = this.get("assetTypes.content");
 
-        if (symbol && rates) {
-            rate = rates.findBy("symbol", symbol);
+        if (symbol && assetTypes) {
+            assetType = assetTypes.findBy("symbol", symbol);
 
-            if (rate) {
-                this.set("form.boughtPrice", rate.get("price"));
+            if (assetType) {
+                this.set("form.boughtPrice", assetType.get("price"));
             }
         }
-    }).observes("rates.content", "form.symbol"),
+    }).observes("assetTypes.content", "form.symbol"),
 
     actions: {
         fetch: function () {
             var boughtOn = this.get("form.boughtOn");
 
             if (boughtOn) {
-                this.set("rates", this.store.find("rate", {
-                    q: "SELECT * FROM money.nbp_rates WHERE date = @date",
-                    date: boughtOn
-                }));
+                this.set("assetTypes", this.store.find("assetType", { date: boughtOn }));
             }
         },
 

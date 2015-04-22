@@ -8,7 +8,7 @@
     <documentationURL></documentationURL>
   </meta>
   <bindings>
-    <select itemPath="result.rates" produces="JSON">
+    <select itemPath="result.assetTypes" produces="JSON">
       <urls>
         <url>http://www.money.pl/pieniadze/nbparch/kupnosprzedaz/archiwum,@date.html</url>
       </urls>
@@ -16,8 +16,8 @@
         <key id="date" type="xs:string" paramType="variable" required="true" />
       </inputs>
       <execute><![CDATA[
-        var actualDate, trs, tr, i, page, url, symbol, price,
-            rates = [];
+        var actualDate, trs, tr, i, page, url, symbol, price, buy, sell,
+            assetTypes = [];
 
         url = request.url.replace("@date", date.replace(/[^0-9]/g, ""));
         page = y.query("SELECT * FROM html WHERE url=@url", { url: url }).results;
@@ -43,18 +43,20 @@
             tr = trs[i];
 
             symbol = trim(tr.td[2]);
+            buy = parseNumber(tr.td[3]);
+            sell = parseNumber(tr.td[5]);
+            price = ((parseFloat(buy) + parseFloat(sell)) / 2).toFixed(4);
 
-            rates.push({
+            assetTypes.push({
                 id: actualDate + "-" + symbol,
                 date: actualDate,
-                divisor: parseNumber(tr.td[1]),
                 symbol: symbol,
-                buy: parseNumber(tr.td[3]),
-                sell: parseNumber(tr.td[5])
+                divisor: parseNumber(tr.td[1]),
+                price: price
             });
         }
 
-        response.object = { rates: rates };
+        response.object = { assetTypes: assetTypes };
       ]]></execute>
     </select>
   </bindings>

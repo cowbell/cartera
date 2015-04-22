@@ -10,10 +10,7 @@ export default Ember.Route.extend({
                 boughtOn: today,
                 container: this.get("container")
             }),
-            rates: this.store.find("rate", {
-                q: "SELECT * FROM money.nbp_rates WHERE date = @today",
-                today: today
-            })
+            assetTypes: this.store.find("assetType", { date: today })
         });
     },
 

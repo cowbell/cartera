@@ -8,7 +8,7 @@
     <documentationURL></documentationURL>
   </meta>
   <bindings>
-    <select itemPath="result.quotes" produces="JSON">
+    <select itemPath="result.assetTypes" produces="JSON">
       <urls>
         <url>http://www.money.pl/gielda/archiwum/latami/kursy,akcji,notowania,GPW,@date,ciagle,akcje.html</url>
       </urls>
@@ -17,7 +17,7 @@
       </inputs>
       <execute><![CDATA[
         var actualDate, trs, tr, i, page, url, name, ticker, symbol,
-            quotes = [];
+            assetTypes = [];
 
         url = request.url.replace("@date", date.replace(/[^0-9]/g, ""));
         page = y.query("SELECT * FROM html WHERE url=@url", { url: url }).results;
@@ -46,17 +46,16 @@
             ticker = trim(tr.td[1]);
             symbol = ticker || name;
 
-            quotes.push({
+            assetTypes.push({
                 id: actualDate + "-" + symbol,
                 date: actualDate,
-                name: name,
-                ticker: ticker,
                 symbol: symbol,
+                divisor: "1",
                 price: parseNumber(tr.td[5])
             });
         }
 
-        response.object = { quotes: quotes };
+        response.object = { assetTypes: assetTypes };
       ]]></execute>
     </select>
   </bindings>

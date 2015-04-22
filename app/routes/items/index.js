@@ -6,10 +6,7 @@ export default Ember.Route.extend({
 
         return Ember.RSVP.hash({
             model: this.store.find("asset"),
-            rates: this.store.find("rate", {
-                q: "SELECT * FROM money.nbp_rates WHERE date = @today",
-                today: today
-            })
+            assetTypes: this.store.find("assetType", { date: today })
         });
     },
 
