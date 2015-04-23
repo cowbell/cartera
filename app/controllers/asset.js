@@ -6,35 +6,35 @@ export default Ember.Controller.extend({
     boughtOn: Ember.computed.alias("model.boughtOn"),
     boughtPrice: Ember.computed.alias("model.boughtPrice"),
 
-    boughtValue: (function () {
+    boughtValue: function () {
         var boughtPrice = this.get("model.boughtPrice"),
             quantity = this.get("model.quantity");
 
         return Math.round(boughtPrice * quantity);
-    }).property("model.boughtPrice", "model.quantity"),
+    }.property("model.boughtPrice", "model.quantity"),
 
-    assetType: (function () {
+    assetType: function () {
         return this.get("parentController.assetTypes").findBy("symbol", this.get("model.symbol"));
-    }).property("parentController.assetTypes.@each", "model.symbol"),
+    }.property("parentController.assetTypes.@each", "model.symbol"),
 
     soldPrice: Ember.computed.alias("assetType.price"),
 
-    soldValue: (function () {
+    soldValue: function () {
         var soldPrice = this.get("soldPrice"),
             quantity = this.get("model.quantity");
 
         return Math.round(soldPrice * quantity);
-    }).property("model.quantity", "soldPrice"),
+    }.property("model.quantity", "soldPrice"),
 
-    profit: (function () {
+    profit: function () {
         return this.get("soldValue") - this.get("boughtValue");
-    }).property("soldValue", "boughtValue"),
+    }.property("soldValue", "boughtValue"),
 
-    isProfit: (function () {
+    isProfit: function () {
         return this.get("profit") > 0;
-    }).property("profit"),
+    }.property("profit"),
 
-    isLoss: (function () {
+    isLoss: function () {
         return this.get("profit") < 0;
-    }).property("profit")
+    }.property("profit")
 });

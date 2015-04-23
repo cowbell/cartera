@@ -16,6 +16,5 @@ export default Ember.Route.extend({
 
     setupController: function (controller, models) {
         controller.setProperties(models);
-        window.STORE = this.store;
     }
 });

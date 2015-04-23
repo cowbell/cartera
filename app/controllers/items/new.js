@@ -1,7 +1,7 @@
 import Ember from "ember";
 
 export default Ember.Controller.extend({
-    assetTypesDidChange: (function () {
+    assetTypesDidChange: function () {
         var assetType,
             symbol = this.get("form.symbol"),
             assetTypes = this.get("assetTypes.content");
@@ -13,7 +13,7 @@ export default Ember.Controller.extend({
                 this.set("form.boughtPrice", assetType.get("price"));
             }
         }
-    }).observes("assetTypes.content", "form.symbol"),
+    }.observes("assetTypes.content", "form.symbol"),
 
     actions: {
         fetch: function () {

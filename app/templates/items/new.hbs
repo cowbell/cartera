@@ -4,7 +4,7 @@
   <form {{action "saveAsset" on="submit"}}>
     <div {{bind-attr class=":form-group form.errors.symbol:has-error"}}>
       <label class="control-label">Symbol</label>
-      {{view "list-field" value=form.symbol class="form-control" list="asset-types"}}
+      {{view "list-field" value=form.symbol class="form-control" listName="asset-types"}}
 
       <datalist id="asset-types">
         {{#each assetType in assetTypes}}
