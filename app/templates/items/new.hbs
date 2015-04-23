@@ -8,7 +8,7 @@
 
       <datalist id="asset-types">
         {{#each assetType in assetTypes}}
-          <option {{bind-attr value=assetType.symbol}}></option>
+          <option>{{assetType.symbol}}</option>
         {{/each}}
       </datalist>
       <span class="help-block">{{form.errors.symbol}}</span>
