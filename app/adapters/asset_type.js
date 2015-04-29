@@ -2,15 +2,21 @@ import Ember from "ember";
 import ajax from "ic-ajax";
 
 export default Ember.Object.extend({
+    cache: {},
+
     yql: function (query) {
-        return ajax({
+        var cacheKey,
+            cache = this.get("cache");
+
+        cacheKey = JSON.stringify(query);
+
+        return cache[cacheKey] || (cache[cacheKey] = ajax({
             url: "https://query.yahooapis.com/v1/public/yql",
-            cache: true,
             data: Ember.merge({
                 format: "json",
                 env: "https://cartera.firebaseapp.com/yql/cartera.env"
             }, query)
-        });
+        }));
     },
 
     findQuery: function (store, type, query) {

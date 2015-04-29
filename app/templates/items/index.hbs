@@ -45,7 +45,7 @@
             {{asset.profit}}
           </td>
           <td class="text-right">
-            <button {{action "destroyAsset" asset}} type="button" class="btn btn-link btn-xs">Remove</button>
+            {{link-to "Edit" "item.edit" asset class="btn btn-link btn-xs"}}
           </td>
         </tr>
       {{/each}}
