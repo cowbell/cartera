@@ -10,13 +10,19 @@ export default Ember.Object.extend({
 
         cacheKey = JSON.stringify(query);
 
-        return cache[cacheKey] || (cache[cacheKey] = ajax({
-            url: "https://query.yahooapis.com/v1/public/yql",
-            data: Ember.merge({
-                format: "json",
-                env: "https://cartera.firebaseapp.com/yql/cartera.env"
-            }, query)
-        }));
+        if (cache[cacheKey]) {
+            return Ember.RSVP.resolve(cache[cacheKey]);
+        } else {
+            return ajax({
+                url: "https://query.yahooapis.com/v1/public/yql",
+                data: Ember.merge({
+                    format: "json",
+                    env: "https://cartera.firebaseapp.com/yql/cartera.env"
+                }, query)
+            }).then(function (result) {
+                return cache[cacheKey] = result;
+            });
+        }
     },
 
     findQuery: function (store, type, query) {
