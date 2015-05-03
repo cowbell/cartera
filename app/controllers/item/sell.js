@@ -18,6 +18,14 @@ export default Ember.Controller.extend(EmberValidations.Mixin, {
         quantity: {
             presence: {
                 if: "isSubmitted"
+            },
+            numericality: {
+                if: "isSubmitted",
+                greaterThan: 0,
+                lessThanOrEqualTo: "asset.quantity",
+                messages: {
+                    lessThanOrEqualTo: "must be less than or equal to bought quantity"
+                }
             }
         },
 
@@ -39,11 +47,34 @@ export default Ember.Controller.extend(EmberValidations.Mixin, {
             if (this.get("soldOn")) {
                 this.set("assetTypes", this.store.find("assetType", { date: this.get("soldOn") }));
             }
-        }
+        },
 
-        // destroyAsset: function () {
-        //     this.get("asset").destroyRecord();
-        //     this.transitionToRoute("items");
-        // }
+        saveAsset: function () {
+            var properties,
+                controller = this,
+                asset = this.get("asset");
+
+            controller.set("isSubmitted", true);
+            properties = controller.getProperties("soldOn", "soldPrice", "quantity");
+
+            this.validate()
+                .then(function () {
+                    var remainingProperties = asset.getProperties("symbol", "boughtOn", "boughtPrice");
+
+                    remainingProperties.quantity = asset.get("quantity") - properties.quantity;
+
+                    if (remainingProperties.quantity > 0) {
+                        return controller.store.createRecord("asset", remainingProperties).save();
+                    } else {
+                        return Ember.RSVP.resolve();
+                    }
+                })
+                .then(function () {
+                    return asset.setProperties(properties).save();
+                })
+                .then(function () {
+                    controller.transitionToRoute("items");
+                });
+        }
     }
 });

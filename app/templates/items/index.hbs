@@ -11,8 +11,8 @@
         <th class="text-center">Bought On</th>
         <th class="text-right">Bought Price</th>
         <th class="text-right">Bought Value</th>
-        <th class="text-right">Sold Price</th>
-        <th class="text-right">Sold Value</th>
+        <th class="text-right">Sold Price /<br>Current Price</th>
+        <th class="text-right">Sold Value /<br>Current Value</th>
         <th class="text-right">Profit / Loss</th>
         <th class="text-right">Actions</th>
       </tr>
@@ -45,7 +45,10 @@
             {{asset.profit}}
           </td>
           <td class="text-right">
-            {{link-to "Sell" "item.sell" asset class="btn btn-link btn-xs"}}
+            {{#unless asset.isSold}}
+              {{link-to "Sell" "item.sell" asset class="btn btn-link btn-xs"}}
+            {{/unless}}
+            <button class="btn btn-link btn-xs" {{action "destroyAsset" asset}}>Remove</button>
           </td>
         </tr>
       {{/each}}
@@ -65,7 +68,7 @@
           {{profit}}
         </th>
         <th class="text-right">
-          {{link-to "Add" "items.new" class="btn btn-link btn-xs"}}
+          {{link-to "Buy" "items.buy" class="btn btn-link btn-xs"}}
         </th>
       </tr>
     </tfoot>

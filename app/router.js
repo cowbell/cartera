@@ -7,7 +7,7 @@ var Router = Ember.Router.extend({
 
 Router.map(function () {
     this.resource("items", function () {
-        this.route("new");
+        this.route("buy");
         this.resource("item", { path: "/:asset_id" }, function () {
             this.route("sell");
         });

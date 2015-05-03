@@ -1,57 +1,65 @@
 <div class="container">
-  <h3>Sell Asset</h3>
-
   <form {{action "saveAsset" on="submit"}}>
+    <legend>Sell Asset</legend>
+
     <div class="form-group">
       <label class="control-label">Symbol</label>
       {{input value=asset.symbol class="form-control" readonly=true}}
     </div>
 
-    <div class="form-group">
-      <label class="control-label">Bought On</label>
-      {{input value=asset.boughtOn class="form-control" type="date" readonly=true}}
-    </div>
+    <fieldset>
+      <legend>Bought</legend>
 
-    <div class="form-group">
-      <label class="control-label">Bought Price</label>
-      <div class="input-group">
-        <span class="input-group-addon">PLN</span>
-        {{input value=asset.boughtPrice class="form-control" type="number" readonly=true}}
+      <div class="form-group">
+        <label class="control-label">Date</label>
+        {{input value=asset.boughtOn class="form-control" type="date" readonly=true}}
       </div>
-    </div>
 
-    <div class="form-group">
-      <label class="control-label">Bought Quantity</label>
-      {{input value=asset.quantity class="form-control" type="number" readonly=true}}
-    </div>
-
-    <div {{bind-attr class=":form-group errors.quantity:has-error"}}>
-      <label class="control-label">Sold Quantity</label>
-      {{input value=quantity class="form-control" type="number"}}
-      <span class="help-block">{{errors.quantity}}</span>
-    </div>
-
-    <div {{bind-attr class=":form-group errors.soldOn:has-error"}}>
-      <label class="control-label">Sold On</label>
-      {{input value=soldOn class="form-control" type="date"}}
-      <span class="help-block">{{errors.soldOn}}</span>
-    </div>
-
-    <div {{bind-attr class=":form-group errors.soldPrice:has-error"}}>
-      <label class="control-label">Sold Price</label>
-      <div class="input-group">
-        <span class="input-group-addon">PLN</span>
-        {{input value=soldPrice class="form-control" type="number" step="any" disabled=assetTypes.isPending}}
-        <span class="input-group-btn">
-          <button type="button" {{action "fetch"}} {{bind-attr disabled=assetTypes.isPending}} class="btn btn-default">
-           {{#if assetTypes.isPending}}Fetching…{{/if}}
-           {{#unless assetTypes.isPending}}Fetch{{/unless}}
-          </button>
-        </span>
+      <div class="form-group">
+        <label class="control-label">Price</label>
+        <div class="input-group">
+          <span class="input-group-addon">PLN</span>
+          {{input value=asset.boughtPrice class="form-control" type="number" readonly=true}}
+        </div>
       </div>
-      <span class="help-block">{{errors.soldPrice}}</span>
-    </div>
 
+      <div class="form-group">
+        <label class="control-label">Quantity</label>
+        {{input value=asset.quantity class="form-control" type="number" readonly=true}}
+      </div>
+    </fieldset>
+
+    <fieldset>
+      <legend>Sold</legend>
+      <div {{bind-attr class=":form-group errors.soldOn:has-error"}}>
+        <label class="control-label">Date</label>
+        {{input value=soldOn class="form-control" type="date"}}
+        <span class="help-block">{{errors.soldOn}}</span>
+      </div>
+
+      <div {{bind-attr class=":form-group errors.soldPrice:has-error"}}>
+        <label class="control-label">Price</label>
+        <div class="input-group">
+          <span class="input-group-addon">PLN</span>
+          {{input value=soldPrice class="form-control" type="number" step="any" disabled=assetTypes.isPending}}
+          <span class="input-group-btn">
+            <button type="button" {{action "fetch"}} {{bind-attr disabled=assetTypes.isPending}} class="btn btn-default">
+              {{#if assetTypes.isPending}}Fetching…{{/if}}
+                {{#unless assetTypes.isPending}}Fetch{{/unless}}
+            </button>
+          </span>
+        </div>
+        <span class="help-block">{{errors.soldPrice}}</span>
+      </div>
+
+      <div {{bind-attr class=":form-group errors.quantity:has-error"}}>
+        <label class="control-label">Quantity</label>
+        {{input value=quantity class="form-control" type="number"}}
+        <span class="help-block">{{errors.quantity}}</span>
+      </div>
+    </fieldset>
+
+    <button type="submit" class="btn btn-primary">Sell</button>
     {{link-to "Cancel" "items.index" class="btn btn-link"}}
   </form>
 </div>

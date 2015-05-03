@@ -17,7 +17,13 @@ export default Ember.Controller.extend({
         return this.get("parentController.assetTypes").findBy("symbol", this.get("model.symbol"));
     }.property("parentController.assetTypes.@each", "model.symbol"),
 
-    soldPrice: Ember.computed.alias("assetType.price"),
+    soldPrice: function () {
+        return this.get("isSold") ? this.get("model.soldPrice") : this.get("assetType.price");
+    }.property("isSold", "model.soldPrice", "assetType.price"),
+
+    isSold: function () {
+        return !isNaN(this.get("model.soldPrice"));
+    }.property("model.soldPrice"),
 
     soldValue: function () {
         var soldPrice = this.get("soldPrice"),
