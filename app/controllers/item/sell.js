@@ -2,8 +2,6 @@ import Ember from "ember";
 import EmberValidations from "ember-validations";
 
 export default Ember.Controller.extend(EmberValidations.Mixin, {
-    quantity: Ember.computed.oneWay("asset.quantity"),
-
     isSubmitted: false,
 
     assetTypesDidChange: function () {
@@ -13,6 +11,10 @@ export default Ember.Controller.extend(EmberValidations.Mixin, {
             this.set("soldPrice", assetType.get("price"));
         }
     }.observes("assetTypes.@each"),
+
+    assetQuantityDidChange: function () {
+        this.set("quantity", this.get("asset.quantity"));
+    }.observes("asset.quantity"),
 
     validations: {
         quantity: {
