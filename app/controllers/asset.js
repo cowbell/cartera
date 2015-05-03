@@ -18,12 +18,8 @@ export default Ember.Controller.extend({
     }.property("parentController.assetTypes.@each", "model.symbol"),
 
     soldPrice: function () {
-        return this.get("isSold") ? this.get("model.soldPrice") : this.get("assetType.price");
-    }.property("isSold", "model.soldPrice", "assetType.price"),
-
-    isSold: function () {
-        return !isNaN(this.get("model.soldPrice"));
-    }.property("model.soldPrice"),
+        return this.get("model.isSold") ? this.get("model.soldPrice") : this.get("assetType.price");
+    }.property("model.isSold", "model.soldPrice", "assetType.price"),
 
     soldValue: function () {
         var soldPrice = this.get("soldPrice"),

@@ -6,5 +6,9 @@ export default DS.Model.extend({
     boughtOn: DS.attr("string"),
     boughtPrice: DS.attr("number"),
     soldOn: DS.attr("string"),
-    soldPrice: DS.attr("number")
+    soldPrice: DS.attr("number"),
+
+    isSold: function () {
+        return !isNaN(this.get("soldPrice"));
+    }.property("soldPrice")
 });
