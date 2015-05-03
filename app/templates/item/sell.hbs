@@ -44,8 +44,12 @@
           {{input value=soldPrice class="form-control" type="number" step="any" disabled=assetTypes.isPending}}
           <span class="input-group-btn">
             <button type="button" {{action "fetch"}} {{bind-attr disabled=assetTypes.isPending}} class="btn btn-default">
-              {{#if assetTypes.isPending}}Fetching…{{/if}}
-                {{#unless assetTypes.isPending}}Fetch{{/unless}}
+              {{#if assetTypes.isPending}}
+                Fetching…
+              {{/if}}
+              {{#unless assetTypes.isPending}}
+                Fetch
+              {{/unless}}
             </button>
           </span>
         </div>
