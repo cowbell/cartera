@@ -36,8 +36,6 @@ export default Ember.Controller.extend(EmberValidations.Mixin, {
         }
     },
 
-    isSubmitted: false,
-
     assetTypesDidChange: function () {
         var assetType = Ember.makeArray(this.get("assetTypes")).findBy("symbol", this.get("symbol"));
 
@@ -68,9 +66,32 @@ export default Ember.Controller.extend(EmberValidations.Mixin, {
             this.set("isSubmitted", true);
             this.validate()
                 .then(function () {
-                    var assets = controller.get("assets").sortBy("boughtPrice");
+                    var quantity = controller.get("quantity"),
+                        soldOn = controller.get("soldOn"),
+                        soldPrice = controller.get("soldPrice"),
+                        assets = Ember.A();
 
-                    
+                    controller.get("assets").filterBy("isSold", false).sortBy("boughtPrice").find(function (asset) {
+                        if (asset.get("quantity") > quantity) {
+                            assets.push(controller.store.createRecord("asset", {
+                                symbol: asset.get("symbol"),
+                                boughtOn: asset.get("boughtOn"),
+                                boughtPrice: asset.get("boughtPrice"),
+                                quantity: asset.get("quantity") - quantity
+                            }));
+                            asset.set("quantity", quantity);
+                        }
+
+                        quantity -= asset.get("quantity");
+                        assets.push(asset.setProperties({ soldOn, soldPrice }));
+
+                        return quantity === 0;
+                    });
+
+                    return Ember.RSVP.all(assets.invoke("save"));
+                })
+                .then(function () {
+                    controller.transitionToRoute("items");
                 });
         }
     }

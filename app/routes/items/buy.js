@@ -5,7 +5,11 @@ export default Ember.Route.extend({
         var today = new Date().toISOString().substr(0, 10);
 
         return Ember.RSVP.hash({
+            isSubmitted: false,
             boughtOn: today,
+            symbol: undefined,
+            quantity: undefined,
+            boughtPrice: undefined,
             assetTypes: this.store.find("assetType", { date: today })
         });
     },

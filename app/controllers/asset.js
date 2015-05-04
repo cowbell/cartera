@@ -5,6 +5,7 @@ export default Ember.Controller.extend({
     quantity: Ember.computed.alias("model.quantity"),
     boughtOn: Ember.computed.alias("model.boughtOn"),
     boughtPrice: Ember.computed.alias("model.boughtPrice"),
+    isSold: Ember.computed.alias("model.isSold"),
 
     boughtValue: function () {
         var boughtPrice = this.get("model.boughtPrice"),

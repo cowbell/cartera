@@ -28,8 +28,6 @@ export default Ember.Controller.extend(EmberValidations.Mixin, {
         }
     },
 
-    isSubmitted: false,
-
     assetTypesDidChange: function () {
         var assetType = Ember.makeArray(this.get("assetTypes")).findBy("symbol", this.get("symbol"));
 

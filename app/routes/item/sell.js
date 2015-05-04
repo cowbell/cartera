@@ -7,6 +7,9 @@ export default Ember.Route.extend({
         return Ember.RSVP.hash({
             asset: this.modelFor("item"),
             soldOn: today,
+            isSubmitted: false,
+            soldPrice: undefined,
+            quantity: undefined,
             assetTypes: this.store.find("assetType", { date: today })
         });
     },
