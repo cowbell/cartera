@@ -6,6 +6,7 @@ export default Ember.Route.extend({
 
         return Ember.RSVP.hash({
             isSubmitted: false,
+            errors: {},
             boughtOn: today,
             symbol: undefined,
             quantity: undefined,

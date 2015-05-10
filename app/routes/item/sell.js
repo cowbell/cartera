@@ -5,14 +5,10 @@ export default Ember.Route.extend({
         var today = new Date().toISOString().substr(0, 10);
 
         return Ember.RSVP.hash({
+            isSubmitted: false,
+            errors: {},
             asset: this.modelFor("item"),
             assetTypes: this.store.find("assetType", { date: today })
-        });
-    },
-
-    resetController: function (controller) {
-        controller.setProperties({
-            isSubmitted: false
         });
     },
 
