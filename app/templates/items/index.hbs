@@ -46,7 +46,7 @@
           </td>
           <td class="text-right">
             {{#unless asset.isSold}}
-              {{link-to "Sell" "item.sell" asset class="btn btn-link btn-xs"}}
+              {{link-to "Sell" "item.sell" asset.model class="btn btn-link btn-xs"}}
             {{/unless}}
             <button class="btn btn-link btn-xs" {{action "destroyAsset" asset}}>Remove</button>
           </td>
