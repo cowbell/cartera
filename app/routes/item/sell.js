@@ -8,7 +8,8 @@ export default Ember.Route.extend({
             isSubmitted: false,
             errors: {},
             asset: this.modelFor("item"),
-            assetTypes: this.store.find("assetType", { date: today })
+            assetTypes: this.store.find("assetType", { date: today }),
+            soldOn: today
         });
     },
 

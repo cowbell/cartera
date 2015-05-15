@@ -31,7 +31,7 @@
 
     <fieldset>
       <legend>Sold</legend>
-      <div {{bind-attr class=":form-group errors.soldOn:has-error"}}>
+      <div class="form-group {{if errors.soldOn 'has-error'}}">
         <label class="control-label">Date</label>
         {{input value=soldOn class="form-control" type="date"}}
         <span class="help-block">{{errors.soldOn}}</span>
@@ -43,7 +43,7 @@
           <span class="input-group-addon">PLN</span>
           {{input value=soldPrice class="form-control" type="number" step="any" disabled=assetTypes.isPending}}
           <span class="input-group-btn">
-            <button type="button" {{action "fetch"}} {{bind-attr disabled=assetTypes.isPending}} class="btn btn-default">
+            <button type="button" {{action "fetch"}} disabled="{{assetTypes.isPending}}" class="btn btn-default">
               {{#if assetTypes.isPending}}
                 Fetching…
               {{/if}}
