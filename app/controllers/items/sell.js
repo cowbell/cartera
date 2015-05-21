@@ -37,7 +37,7 @@ export default Ember.Controller.extend(EmberValidations.Mixin, {
     },
 
     assetTypesDidChange: function () {
-        var assetType = Ember.makeArray(this.get("assetTypes")).findBy("symbol", this.get("symbol"));
+        var assetType = this.get("assetTypes").findBy("symbol", this.get("symbol"));
 
         if (assetType) {
             this.set("soldPrice", assetType.get("price"));

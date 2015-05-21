@@ -34,7 +34,7 @@
           <span class="input-group-addon">PLN</span>
           {{input value=soldPrice class="form-control" type="number" step="any" disabled=assetTypes.isPending}}
           <span class="input-group-btn">
-            <button type="button" {{action "fetch"}} disabled=assetTypes.isPending class="btn btn-default">
+            <button type="button" {{action "fetch"}} disabled={{assetTypes.isPending}} class="btn btn-default">
               {{#if assetTypes.isPending}}
                 Fetching…
               {{/if}}

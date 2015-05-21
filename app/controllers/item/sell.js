@@ -5,7 +5,7 @@ export default Ember.Controller.extend(EmberValidations.Mixin, {
     isSubmitted: false,
 
     assetTypesDidChange: function () {
-        var assetType = Ember.makeArray(this.get("assetTypes")).findBy("symbol", this.get("asset.symbol"));
+        var assetType = this.get("assetTypes").findBy("symbol", this.get("asset.symbol"));
 
         if (assetType) {
             this.set("soldPrice", assetType.get("price"));
