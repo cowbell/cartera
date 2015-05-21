@@ -25,13 +25,18 @@ export default Ember.Controller.extend(EmberValidations.Mixin, {
     actions: {
         signUp: function () {
             var controller = this,
+                properties = this.getProperties("email", "password"),
                 ref = new Firebase(config.firebase);
 
-            this.set("isSubmitted", true);
+            this.setProperties({
+                isSubmitted: true,
+                serverError: undefined
+            });
+
             this.validate()
                 .then(function () {
                     return new Ember.RSVP.Promise(function (resolve, reject) {
-                        ref.createUser(controller.getProperties("email", "password"), function (error, user) {
+                        ref.createUser(properties, function (error, user) {
                             if (error) {
                                 reject(error);
                             } else {

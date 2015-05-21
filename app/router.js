@@ -7,6 +7,7 @@ var Router = Ember.Router.extend({
 
 Router.map(function () {
     this.route("sign-up");
+    this.route("sign-in");
     this.resource("items", function () {
         this.route("buy");
         this.route("sell");
