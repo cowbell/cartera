@@ -36,16 +36,16 @@
         <div class="input-group">
           <span class="input-group-addon">PLN</span>
           {{input value=boughtPrice class="form-control" type="number" step="any" disabled=assetTypes.isPending}}
-          <span class="input-group-btn">
-            <button type="button" {{action "fetch"}} disabled={{assetTypes.isPending}} class="btn btn-default">
-              {{#if assetTypes.isPending}}
-                Fetching…
-              {{/if}}
-              {{#unless assetTypes.isPending}}
-                Fetch
-              {{/unless}}
-            </button>
-          </span>
+          {{! <span class="input-group-btn"> }}
+          {{!   <button type="button" {{action "fetch"}\} disabled={{assetTypes.isPending}\} class="btn btn-default"> }}
+          {{!     {{#if assetTypes.isPending}\} }}
+          {{!       Fetching… }}
+          {{!     {{/if}\} }}
+          {{!     {{#unless assetTypes.isPending}\} }}
+          {{!       Fetch }}
+          {{!     {{/unless}\} }}
+          {{!   </button> }}
+          {{! </span> }}
         </div>
         <span class="help-block">{{errors.boughtPrice}}</span>
       </div>
@@ -65,16 +65,16 @@
         <div class="input-group">
           <span class="input-group-addon">PLN</span>
           {{input value=soldPrice class="form-control" type="number" step="any" disabled=assetTypes.isPending}}
-          <span class="input-group-btn">
-            <button type="button" {{action "fetch"}} disabled={{assetTypes.isPending}} class="btn btn-default">
-              {{#if assetTypes.isPending}}
-                Fetching…
-              {{/if}}
-              {{#unless assetTypes.isPending}}
-                Fetch
-              {{/unless}}
-            </button>
-          </span>
+          {{! <span class="input-group-btn"> }}
+          {{!   <button type="button" {{action "fetch"}\} disabled={{assetTypes.isPending}\} class="btn btn-default"> }}
+          {{!     {{#if assetTypes.isPending}\} }}
+          {{!       Fetching… }}
+          {{!     {{/if}\} }}
+          {{!     {{#unless assetTypes.isPending}\} }}
+          {{!       Fetch }}
+          {{!     {{/unless}\} }}
+          {{!   </button> }}
+          {{! </span> }}
         </div>
         <span class="help-block">{{errors.soldPrice}}</span>
       </div>
