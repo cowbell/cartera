@@ -48,7 +48,7 @@
             {{#unless asset.isSold}}
               {{link-to "Sell" "item.sell" asset.model class="btn btn-link btn-xs"}}
             {{/unless}}
-            <button class="btn btn-link btn-xs" {{action "destroyAsset" asset}}>Remove</button>
+            {{link-to "Edit" "item.edit" asset.model class="btn btn-link btn-xs"}}
           </td>
         </tr>
       {{/each}}

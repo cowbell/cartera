@@ -11,6 +11,7 @@ Router.map(function () {
         this.route("sell");
         this.resource("item", { path: "/:asset_id" }, function () {
             this.route("sell");
+            this.route("edit");
         });
     });
 });

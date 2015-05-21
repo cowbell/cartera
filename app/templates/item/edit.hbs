@@ -1,0 +1,87 @@
+<div class="container">
+  <form {{action "saveAsset" on="submit"}}>
+    <legend>Edit Asset</legend>
+
+    <fieldset>
+      <div class="form-group {{if errors.symbol 'has-error'}}">
+        <label class="control-label">Symbol</label>
+        {{view "list-field" value=symbol class="form-control" listName="asset-types"}}
+
+        <datalist id="asset-types">
+        {{#each assetType in assetTypes}}
+          <option>{{assetType.symbol}}</option>
+        {{/each}}
+        </datalist>
+        <span class="help-block">{{errors.symbol}}</span>
+      </div>
+
+      <div class="form-group {{if errors.quantity 'has-error'}}">
+        <label class="control-label">Quantity</label>
+        {{input value=quantity class="form-control" type="number"}}
+        <span class="help-block">{{errors.quantity}}</span>
+      </div>
+    </fieldset>
+
+    <fieldset>
+      <legend>Bought</legend>
+
+      <div class="form-group {{if errors.boughtOn 'has-error'}}">
+        <label class="control-label">Date</label>
+        {{input value=boughtOn class="form-control" type="date"}}
+        <span class="help-block">{{errors.boughtOn}}</span>
+      </div>
+
+      <div class="form-group {{if errors.boughtPrice 'has-error'}}">
+        <label class="control-label">Price</label>
+        <div class="input-group">
+          <span class="input-group-addon">PLN</span>
+          {{input value=boughtPrice class="form-control" type="number" step="any" disabled=assetTypes.isPending}}
+          <span class="input-group-btn">
+            <button type="button" {{action "fetch"}} disabled={{assetTypes.isPending}} class="btn btn-default">
+              {{#if assetTypes.isPending}}
+                Fetching…
+              {{/if}}
+              {{#unless assetTypes.isPending}}
+                Fetch
+              {{/unless}}
+            </button>
+          </span>
+        </div>
+        <span class="help-block">{{errors.boughtPrice}}</span>
+      </div>
+    </fieldset>
+
+    <fieldset>
+      <legend>Sold</legend>
+
+      <div class="form-group {{if errors.soldOn 'has-error'}}">
+        <label class="control-label">Date</label>
+        {{input value=soldOn class="form-control" type="date"}}
+        <span class="help-block">{{errors.soldOn}}</span>
+      </div>
+
+      <div class="form-group {{if errors.soldPrice 'has-error'}}">
+        <label class="control-label">Price</label>
+        <div class="input-group">
+          <span class="input-group-addon">PLN</span>
+          {{input value=soldPrice class="form-control" type="number" step="any" disabled=assetTypes.isPending}}
+          <span class="input-group-btn">
+            <button type="button" {{action "fetch"}} disabled={{assetTypes.isPending}} class="btn btn-default">
+              {{#if assetTypes.isPending}}
+                Fetching…
+              {{/if}}
+              {{#unless assetTypes.isPending}}
+                Fetch
+              {{/unless}}
+            </button>
+          </span>
+        </div>
+        <span class="help-block">{{errors.soldPrice}}</span>
+      </div>
+    </fieldset>
+
+    <button type="submit" class="btn btn-primary">Save</button>
+    <button type="button" class="btn btn-danger" {{action "destroyAsset"}}>Remove</button>
+    {{link-to "Cancel" "items.index" class="btn btn-link"}}
+  </form>
+</div>
