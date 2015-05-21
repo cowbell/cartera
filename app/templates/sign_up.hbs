@@ -1,0 +1,24 @@
+<div class="container">
+  <form {{action "signUp" on="submit"}}>
+    <legend>Sign Up</legend>
+
+    <div class="form-group {{if errors.email 'has-error'}}">
+      <label class="control-label">Email</label>
+      {{input value=email class="form-control" type="email"}}
+      <span class="help-block">{{errors.email}}</span>
+    </div>
+
+    <div class="form-group {{if errors.password 'has-error'}}">
+      <label class="control-label">Password</label>
+      {{input value=password class="form-control" type="password"}}
+      <span class="help-block">{{errors.password}}</span>
+    </div>
+
+    <div class="form-group {{if serverError 'has-error'}}">
+      <span class="help-block">{{serverError.message}}</span>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Sign Up</button>
+    {{link-to "Cancel" "index" class="btn btn-link"}}
+  </form>
+</div>
