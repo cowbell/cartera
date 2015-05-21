@@ -19,7 +19,7 @@
     </thead>
     <tbody>
       {{#each asset in controller}}
-        <tr {{bind-attr class="asset.isLoss:text-danger asset.isProfit:text-success"}}>
+        <tr class="form-group {{if asset.isLoss 'text-danger'}} {{if asset.isProfit 'text-success'}}">
           <td>
             {{asset.symbol}}
           </td>

@@ -3,7 +3,7 @@
     <legend>Buy Asset</legend>
 
     <fieldset>
-      <div {{bind-attr class=":form-group errors.symbol:has-error"}}>
+      <div class="form-group {{if errors.symbol 'has-error'}}">
         <label class="control-label">Symbol</label>
         {{view "list-field" value=symbol class="form-control" listName="asset-types"}}
 
@@ -18,25 +18,25 @@
 
     <fieldset>
       <legend>Bought</legend>
-      <div {{bind-attr class=":form-group errors.quantity:has-error"}}>
+      <div class="form-group {{if errors.quantity 'has-error'}}">
         <label class="control-label">Quantity</label>
         {{input value=quantity class="form-control" type="number"}}
         <span class="help-block">{{errors.quantity}}</span>
       </div>
 
-      <div {{bind-attr class=":form-group errors.boughtOn:has-error"}}>
+      <div class="form-group {{if errors.boughtOn 'has-error'}}">
         <label class="control-label">Date</label>
         {{input value=boughtOn class="form-control" type="date"}}
         <span class="help-block">{{errors.boughtOn}}</span>
       </div>
 
-      <div {{bind-attr class=":form-group errors.boughtPrice:has-error"}}>
+      <div class="form-group {{if errors.boughtPrice 'has-error'}}">
         <label class="control-label">Price</label>
         <div class="input-group">
           <span class="input-group-addon">PLN</span>
           {{input value=boughtPrice class="form-control" type="number" step="any" disabled=assetTypes.isPending}}
           <span class="input-group-btn">
-            <button type="button" {{action "fetch"}} {{bind-attr disabled=assetTypes.isPending}} class="btn btn-default">
+            <button type="button" {{action "fetch"}} disabled=assetTypes.isPending class="btn btn-default">
               {{#if assetTypes.isPending}}
                 Fetching…
               {{/if}}
