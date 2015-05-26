@@ -1,7 +1,5 @@
 import Ember from "ember";
 import EmberValidations from "ember-validations";
-import config from "../config/environment";
-import Firebase from "firebase";
 
 export default Ember.Controller.extend(EmberValidations.Mixin, {
     validations: {
@@ -26,7 +24,7 @@ export default Ember.Controller.extend(EmberValidations.Mixin, {
         signUp: function () {
             var controller = this,
                 properties = this.getProperties("email", "password"),
-                ref = new Firebase(config.firebase);
+                ref = this.store.adapterFor("application").get("firebase");
 
             this.setProperties({
                 isSubmitted: true,

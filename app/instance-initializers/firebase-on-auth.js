@@ -8,8 +8,10 @@ export default {
         var ref = new Firebase(config.firebase);
 
         ref.onAuth(function (auth) {
-            var session = instance.container.lookup("session:main");
+            var session = instance.container.lookup("session:main"),
+                store = instance.container.lookup("store:main");
 
+            store.init();
             session.set("user", auth);
         });
     }

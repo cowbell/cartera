@@ -3,16 +3,15 @@ import Firebase from "firebase";
 import FirebaseAdapter from "emberfire/adapters/firebase";
 
 export default FirebaseAdapter.extend({
-    session: function () {
-        return this.container.lookup("session:main");
-    }.property(),
+    firebase: function () {
+        var ref = new Firebase(config.firebase),
+            uid = ref.getAuth().uid;
 
-    firebase: new Firebase(config.firebase),
-    // firebase: function () {
-    //     return new Firebase(config.firebase);
-    // }.property("session.uid"),
+        return uid ? ref.child(uid) : ref;
+    }.property().volatile(),
 
-    sessionUidDidChange: function () {
-        console.log(this.get("session.uid"));
-    }.observes("session.uid")
+    _getRef: function (type, id) {
+        this._ref = this.get("firebase").ref();
+        return this._super.apply(this, arguments);
+    }
 });
