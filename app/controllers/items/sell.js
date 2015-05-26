@@ -66,27 +66,32 @@ export default Ember.Controller.extend(EmberValidations.Mixin, {
             this.set("isSubmitted", true);
             this.validate()
                 .then(function () {
-                    var quantity = controller.get("quantity"),
+                    var symbol = controller.get("symbol"),
+                        quantity = controller.get("quantity"),
                         soldOn = controller.get("soldOn"),
                         soldPrice = controller.get("soldPrice"),
                         assets = Ember.A();
 
-                    controller.get("assets").filterBy("isSold", false).sortBy("boughtPrice").find(function (asset) {
-                        if (asset.get("quantity") > quantity) {
-                            assets.push(controller.store.createRecord("asset", {
-                                symbol: asset.get("symbol"),
-                                boughtOn: asset.get("boughtOn"),
-                                boughtPrice: asset.get("boughtPrice"),
-                                quantity: asset.get("quantity") - quantity
-                            }));
-                            asset.set("quantity", quantity);
-                        }
+                    controller.get("assets")
+                        .filterBy("symbol", symbol)
+                        .filterBy("isSold", false)
+                        .sortBy("boughtPrice")
+                        .find(function (asset) {
+                            if (asset.get("quantity") > quantity) {
+                                assets.push(controller.store.createRecord("asset", {
+                                    symbol: symbol,
+                                    boughtOn: asset.get("boughtOn"),
+                                    boughtPrice: asset.get("boughtPrice"),
+                                    quantity: asset.get("quantity") - quantity
+                                }));
+                                asset.set("quantity", quantity);
+                            }
 
-                        quantity -= asset.get("quantity");
-                        assets.push(asset.setProperties({ soldOn, soldPrice }));
+                            quantity -= asset.get("quantity");
+                            assets.push(asset.setProperties({ soldOn, soldPrice }));
 
-                        return quantity === 0;
-                    });
+                            return quantity === 0;
+                        });
 
                     return Ember.RSVP.all(assets.invoke("save"));
                 })

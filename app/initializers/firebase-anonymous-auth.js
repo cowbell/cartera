@@ -2,8 +2,9 @@ import Firebase from "firebase";
 import config from "../config/environment";
 
 export default {
-    name: "firebase-auth",
-    initialize: function (container, application) {
+    name: "firebase-anonymous-auth",
+
+    initialize: function (registry, application) {
         var ref = new Firebase(config.firebase);
 
         if (!ref.getAuth()) {
