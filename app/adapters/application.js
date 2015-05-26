@@ -10,7 +10,7 @@ export default FirebaseAdapter.extend({
         return uid ? ref.child(uid) : ref;
     }.property().volatile(),
 
-    _getRef: function (type, id) {
+    _getRef: function () {
         this._ref = this.get("firebase").ref();
         return this._super.apply(this, arguments);
     }

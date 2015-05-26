@@ -1,4 +1,3 @@
-import Ember from "ember";
 import Session from "cartera/models/session";
 
 export default {
