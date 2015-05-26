@@ -12,6 +12,7 @@ export default FirebaseAdapter.extend({
 
     _getRef: function () {
         this._ref = this.get("firebase").ref();
+
         return this._super.apply(this, arguments);
     }
 });
