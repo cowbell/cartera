@@ -1,4 +1,10 @@
 <div class="container">
+  <p>
+    {{session.email}}
+  </p>
+
+  {{log session}}
+
   {{link-to "Sign Up" "sign-up" class="btn btn-link"}}
   {{link-to "Sign In" "sign-in" class="btn btn-link"}}
   <button class="btn btn-link" {{action "signOut"}}>Sign Out</button>
