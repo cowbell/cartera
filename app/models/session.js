@@ -16,7 +16,7 @@ export default Ember.Object.extend({
     }.property("user", "isAnonymous"),
 
     emailMD5: function () {
-        return md5(this.getWithDefault("email", ""));
+        return window.md5(this.getWithDefault("email", ""));
     }.property("email"),
 
     gravatarURL: function () {
