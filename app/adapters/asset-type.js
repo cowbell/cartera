@@ -36,7 +36,9 @@ export default Ember.Object.extend({
                     var assetTypes = [];
 
                     response.query.results.results.forEach(function (result) {
-                        assetTypes = assetTypes.concat(result.assetTypes);
+                        if (result) {
+                            assetTypes = assetTypes.concat(result.assetTypes);
+                        }
                     });
 
                     return {assetTypes};

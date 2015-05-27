@@ -1,8 +1,4 @@
 <div class="container">
-  <h3>
-    {{link-to "Assets" "items.index"}}
-  </h3>
-
   <table class="table table-striped">
     <thead>
       <tr>
@@ -18,7 +14,7 @@
       </tr>
     </thead>
     <tbody>
-      {{#each asset in controller}}
+      {{#each asset in unsoldAssets}}
         <tr class="form-group {{if asset.isLoss 'text-danger'}} {{if asset.isProfit 'text-success'}}">
           <td>
             {{asset.symbol}}
@@ -45,9 +41,7 @@
             {{asset.profit}}
           </td>
           <td class="text-right">
-            {{#unless asset.isSold}}
-              {{link-to "Sell" "item.sell" asset.model class="btn btn-link btn-xs"}}
-            {{/unless}}
+            {{link-to "Sell" "item.sell" asset.model class="btn btn-link btn-xs"}}
             {{link-to "Edit" "item.edit" asset.model class="btn btn-link btn-xs"}}
           </td>
         </tr>
@@ -73,5 +67,56 @@
         </th>
       </tr>
     </tfoot>
+    <thead>
+      {{#unless isShowingSold}}
+        <tr>
+          <td colspan="9" class="text-muted text-center">
+            <button class="btn btn-link btn-xs" {{action "showSold"}}>Show Sold Assets</button>
+          </td>
+        </tr>
+      {{/unless}}
+      {{#if isShowingSold}}
+        <tr>
+          <td colspan="9" class="text-muted text-center">
+            <button class="btn btn-link btn-xs" {{action "hideSold"}}>Hide Sold Assets</button>
+          </td>
+        </tr>
+      {{/if}}
+    </thead>
+    {{#if isShowingSold}}
+      <tbody>
+        {{#each asset in soldAssets}}
+          <tr class="form-group {{if asset.isLoss 'text-danger'}} {{if asset.isProfit 'text-success'}}">
+            <td>
+              {{asset.symbol}}
+            </td>
+            <td class="text-right">
+              {{asset.quantity}}
+            </td>
+            <td class="text-center">
+              {{asset.boughtOn}}
+            </td>
+            <td class="text-right">
+              {{asset.boughtPrice}}
+            </td>
+            <td class="text-right">
+              {{asset.boughtValue}}
+            </td>
+            <td class="text-right">
+              {{asset.soldPrice}}
+            </td>
+            <td class="text-right">
+              {{asset.soldValue}}
+            </td>
+            <td class="text-right">
+              {{asset.profit}}
+            </td>
+            <td class="text-right">
+              {{link-to "Edit" "item.edit" asset.model class="btn btn-link btn-xs"}}
+            </td>
+          </tr>
+        {{/each}}
+      </tbody>
+    {{/if}}
   </table>
 </div>
