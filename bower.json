@@ -14,6 +14,7 @@
     "qunit": "1.18.0",
     "firebase": "~2.2.5",
     "bootstrap-sass-official": "3.3.4",
-    "handlebars": "~3.0.3"
+    "handlebars": "~3.0.3",
+    "blueimp-md5": "~1.1.0"
   }
 }

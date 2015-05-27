@@ -1,7 +1,43 @@
-<div class="container">
-  <h2>
-    {{link-to "Cartera" "index"}}
-  </h2>
-</div>
+<nav class="navbar navbar-default">
+  <div class="container">
+    <div class="navbar-header">
+      {{link-to "Cartera" "index" class="navbar-brand"}}
+    </div>
+
+    <ul class="nav navbar-nav">
+      {{#link-to "items.index" tagName="li"}}
+        <a href="javascript:;">Assets</a>
+      {{/link-to}}
+    </ul>
+
+    {{#if session.isAnonymous}}
+      <ul class="nav navbar-nav navbar-right">
+        <li>
+          <p class="navbar-text">
+            <img height="30" class="gravatar img-circle" {{bind-attr src="session.gravatarURL"}}>
+            Not logged in
+          </p>
+        </li>
+        <li>
+          {{link-to "Sign Up" "sign-up" class="btn btn-link"}}
+        </li>
+      </ul>
+    {{/if}}
+
+    {{#unless session.isAnonymous}}
+      <ul class="nav navbar-nav navbar-right">
+        <li>
+          <p class="navbar-text">
+            <img height="30" class="gravatar img-circle" {{bind-attr src="session.gravatarURL"}}>
+            {{session.email}}
+          </p>
+        </li>
+        <li>
+          <a href="javascript:;" class="btn btn-link" {{action "signOut"}}>Sign Out</a>
+        </li>
+      </ul>
+    {{/unless}}
+  </div>
+</nav>
 
 {{outlet}}
